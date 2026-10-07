@@ -1,0 +1,17 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["docs/**", "**.md"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build universal app
+        run: Scripts/build-app.sh release
+      - name: Check architectures
+        run: lipo -info build/ShotMate.app/Contents/MacOS/ShotMate

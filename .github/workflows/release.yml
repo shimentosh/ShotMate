@@ -1,0 +1,37 @@
+name: Release
+
+# Push a tag like v1.0.1 to build ShotMate.dmg and publish it as a GitHub Release.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" ShotMate/Resources/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" ShotMate/Resources/Info.plist
+
+      - name: Build DMG
+        run: Scripts/build-dmg.sh
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/ShotMate.dmg
+          generate_release_notes: true
+          body: |
+            ## Install
+            1. Download **ShotMate.dmg** below, open it and drag ShotMate into **Applications**.
+            2. Open ShotMate. If macOS can't verify it, go to **System Settings › Privacy & Security** and click **Open Anyway**.
+            3. Turn on **Screen Recording** for ShotMate, reopen it, and press **⇧⌘S**.
+
+            Requires macOS 14 Sonoma or later · Universal (Apple Silicon & Intel)

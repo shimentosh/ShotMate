@@ -1,0 +1,109 @@
+/* Product shot of ShotMate's capture overlay, built in HTML/CSS so it stays sharp at any size.
+   Used by the landing page and rendered to PNG for the README / social cards (Scripts/marketing). */
+.mock {
+  --mock-sel-l: 57.5%;
+  --mock-sel-t: 21%;
+  --mock-sel-w: 35%;
+  --mock-sel-h: 48%;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  container-type: inline-size;
+  overflow: hidden;
+  border-radius: 1.4cqw;
+  background:
+    radial-gradient(120% 90% at 10% 0%, #8fb6ff 0%, transparent 55%),
+    radial-gradient(90% 80% at 100% 100%, #b18cff 0%, transparent 60%),
+    linear-gradient(135deg, #5a7cf0, #7a5ae6);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Fake app window behind the overlay */
+.mock-win {
+  position: absolute; left: 5%; top: 6%; width: 90%; height: 84%;
+  border-radius: 1cqw; overflow: hidden;
+  background: #1d1f25;
+  box-shadow: 0 2cqw 5cqw rgba(20, 16, 60, .45), 0 0 0 .08cqw rgba(255,255,255,.12);
+  display: grid; grid-template-columns: 17% 40% 1fr; grid-template-rows: 5.2cqw 1fr;
+}
+.mock-titlebar { grid-column: 1 / -1; display: flex; align-items: center; gap: .7cqw; padding: 0 1.4cqw; background: #26282f; border-bottom: .08cqw solid #000; }
+.mock-titlebar i { width: 1cqw; height: 1cqw; border-radius: 50%; background: #ff5f57; }
+.mock-titlebar i:nth-child(2) { background: #febc2e; }
+.mock-titlebar i:nth-child(3) { background: #28c840; }
+.mock-titlebar b { margin-left: 2cqw; height: .9cqw; width: 14cqw; border-radius: .5cqw; background: #3a3d46; }
+.mock-side { background: #22242a; padding: 1.6cqw 1.2cqw; display: flex; flex-direction: column; gap: 1.05cqw; }
+.mock-side span { height: .85cqw; border-radius: .4cqw; background: #3b3f4a; }
+.mock-side span:nth-child(3) { background: #4a6cf7; width: 80%; }
+.mock-side span:nth-child(odd) { width: 70%; }
+.mock-code { padding: 1.6cqw 1.6cqw; display: flex; flex-direction: column; gap: 1.05cqw; border-right: .08cqw solid #000; }
+.mock-code p { margin: 0; height: .85cqw; display: flex; gap: .6cqw; }
+.mock-code p span { border-radius: .4cqw; background: #c678dd; }
+.mock-code p span:nth-child(2) { background: #61afef; }
+.mock-code p span:nth-child(3) { background: #98c379; }
+.mock-code p span:nth-child(4) { background: #5c6370; }
+.mock-preview { background: #f4f5f8; display: grid; place-items: center; }
+.mock-card {
+  width: 74%; padding: 2.2cqw 2.2cqw 2.4cqw; border-radius: 1cqw; background: #fff;
+  box-shadow: 0 .4cqw 1.6cqw rgba(30, 40, 80, .12);
+  display: flex; flex-direction: column; gap: .9cqw;
+}
+.mock-card .h { height: 1.5cqw; width: 70%; border-radius: .5cqw; background: #1d1f25; }
+.mock-card .t { height: .8cqw; border-radius: .4cqw; background: #d4d7df; }
+.mock-card .t.s { width: 75%; }
+.mock-card .cta {
+  margin-top: 1cqw; width: 42%; height: 2.8cqw; border-radius: .6cqw; background: #4a6cf7;
+  color: #fff; font-size: 1.05cqw; font-weight: 600; display: grid; place-items: center;
+  /* ShotMate rectangle annotation around the button */
+  outline: .3cqw solid #ff3b30; outline-offset: .55cqw;
+}
+
+/* Capture overlay: dim everything except the selection */
+.mock-sel {
+  position: absolute; left: var(--mock-sel-l); top: var(--mock-sel-t); width: var(--mock-sel-w); height: var(--mock-sel-h);
+  box-shadow: 0 0 0 200cqw rgba(0, 0, 0, .42), 0 0 0 .1cqw rgba(0,0,0,.35);
+  outline: .1cqw solid #fff;
+}
+.mock-sel em {
+  position: absolute; width: .75cqw; height: .75cqw; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 0 .08cqw rgba(0,0,0,.3); transform: translate(-50%, -50%);
+}
+.mock-sel em:nth-of-type(1) { left: 0; top: 0; }
+.mock-sel em:nth-of-type(2) { left: 50%; top: 0; }
+.mock-sel em:nth-of-type(3) { left: 100%; top: 0; }
+.mock-sel em:nth-of-type(4) { left: 100%; top: 50%; }
+.mock-sel em:nth-of-type(5) { left: 100%; top: 100%; }
+.mock-sel em:nth-of-type(6) { left: 50%; top: 100%; }
+.mock-sel em:nth-of-type(7) { left: 0; top: 100%; }
+.mock-sel em:nth-of-type(8) { left: 0; top: 50%; }
+.mock-badge {
+  position: absolute; left: var(--mock-sel-l); top: calc(var(--mock-sel-t) - 2.9cqw);
+  padding: .3cqw .65cqw; border-radius: .45cqw; background: rgba(0,0,0,.72); color: #fff;
+  font-size: 1cqw; font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.mock-ann { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* Floating toolbar */
+.mock-bar {
+  position: absolute; right: calc(100% - var(--mock-sel-l) - var(--mock-sel-w)); top: calc(var(--mock-sel-t) + var(--mock-sel-h) + 1.1cqw);
+  display: flex; align-items: center; gap: .2cqw; padding: .45cqw;
+  border-radius: 1cqw; background: rgba(246, 246, 248, .9);
+  backdrop-filter: blur(1.5cqw) saturate(1.6); -webkit-backdrop-filter: blur(1.5cqw) saturate(1.6);
+  box-shadow: 0 .8cqw 2.4cqw rgba(0,0,0,.28), 0 0 0 .06cqw rgba(0,0,0,.12);
+}
+.mock-bar .b { width: 2.5cqw; height: 2.5cqw; border-radius: .6cqw; display: grid; place-items: center; color: #1d1d1f; }
+.mock-bar .b svg { width: 1.25cqw; height: 1.25cqw; }
+.mock-bar .b.on { background: #0a84ff; color: #fff; }
+.mock-bar .sep { width: .08cqw; height: 1.6cqw; background: rgba(0,0,0,.15); margin: 0 .35cqw; }
+.mock-bar .dot { width: 1.25cqw; height: 1.25cqw; border-radius: 50%; margin: 0 .2cqw; box-shadow: inset 0 0 0 .06cqw rgba(0,0,0,.25); }
+.mock-bar .dot.on { outline: .17cqw solid #0a84ff; outline-offset: .17cqw; }
+.mock-bar .weight { width: 2.5cqw; height: 2.5cqw; display: grid; place-items: center; }
+.mock-bar .weight i { width: 1.4cqw; height: .4cqw; border-radius: .2cqw; background: #ff3b30; }
+.mock-bar .copy {
+  margin-left: .35cqw; height: 2.5cqw; padding: 0 1cqw; border-radius: .6cqw; background: #0a84ff; color: #fff;
+  display: flex; align-items: center; gap: .45cqw; font-size: 1.1cqw; font-weight: 600;
+}
+.mock-bar .copy svg { width: 1cqw; height: 1cqw; }
+
+/* Cursor */
+.mock-cursor { position: absolute; left: 47%; top: 61%; width: 2.4cqw; height: 2.4cqw; }
